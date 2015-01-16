@@ -7,6 +7,15 @@ import time
 from time import ctime
 
 
+def getTime():
+	while(1):
+	    try:
+		ntpClient = ntplib.NTPClient()
+		response = ntpClient.request('3.us.pool.ntp.org')
+		return ctime(response.tx_time)
+	    except:
+		pass
+
 def collect_data():
 
     while(1):
@@ -35,7 +44,7 @@ def collect_data():
         print "Gold 100g %s$" % (float(goldPrice)/31.1035*100 )
         print "Gold 100g %ssek" %((float(goldPrice)*float(SEK))/31.1035*100 )
 
-        timestamp = ctime(response.tx_time)
+        timestamp = getTime()
         gold_gram_usd = "%.3f" % (float(goldPrice)/31.1035*100)
         gold_gram_sek = "%.3f" % (float(goldPrice)*float(SEK)/31.1035*100)
         gold_ozt_sek = "%.3f" % (float(goldPrice)*float(SEK))
